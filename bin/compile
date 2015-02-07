@@ -29,5 +29,6 @@ tar xf $TARBALL
 
 # Grab the libs
 echo -n "-----> Installing libsodium ($VERSION)... "
+mkdir -p $BUILD_PATH/lib
 cp -rf lib/* $BUILD_PATH/lib
 echo "done"
