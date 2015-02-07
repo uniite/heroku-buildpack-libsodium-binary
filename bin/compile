@@ -16,19 +16,16 @@ TARBALL_URL=https://api.anvilworks.org/slugs/$TARBALL
 
 # Download and verify the pre-built libs
 mkdir $SODIUM_DIR
-if !(test -d $SODIUM_DIR);
-then
-  echo -n "-----> Fetching libsodium ($VERSION)... "
-  cd $SODIUM_DIR
-  curl -O $TARBALL_URL
-  if (sha256sum $TARBALL | grep $HASH &> /dev/null); then
-    echo "done"
-  else
-    echo "failed to verify tarball!"
-    exit 1
-  fi
-  tar xzf $TARBALL
+echo -n "-----> Fetching libsodium ($VERSION)... "
+cd $SODIUM_DIR
+teft -f $TARBALL || curl -O $TARBALL_URL
+if (sha256sum $TARBALL | grep $HASH &> /dev/null); then
+  echo "done"
+else
+  echo "failed to verify tarball!"
+  exit 1
 fi
+tar xf $TARBALL
 
 # Grab the libs
 echo -n "-----> Installing libsodium ($VERSION)... "
