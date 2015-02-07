@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+mkdir -p "$1" "$2"
+BUILD_PATH=$(cd "$1/" && pwd)
+CACHE_PATH=$(cd "$2/" && pwd)
+
+VERSION=1.0.2
+SODIUM_DIR=$CACHE_PATH/libsodium-$VERSION
+
+HASH=255c4f1f5e9c40c7aa1a0afa95f08ff2aa8a117ccfdde11908e1924dc298cf04
+TARBALL=8e9bceaf-2cb3-4414-b241-5b30983ea388.tgz
+TARBALL_URL=https://api.anvilworks.org/slugs/$TARBALL
+
+
+# Download and verify the pre-built libs
+mkdir $SODIUM_DIR
+if !(test -d $SODIUM_DIR);
+then
+  echo -n "-----> Fetching libsodium ($VERSION)... "
+  cd $SODIUM_DIR
+  curl -O $TARBALL_URL
+  if (sha256sum $TARBALL | grep $HASH &> /dev/null); then
+    echo "done"
+  else
+    echo "failed to verify tarball!"
+    exit 1
+  fi
+  tar xzf $TARBALL
+fi
+
+# Grab the libs
+echo -n "-----> Installing libsodium ($VERSION)... "
+cp -rf lib/* $BUILD_PATH/lib
+echo "done"
