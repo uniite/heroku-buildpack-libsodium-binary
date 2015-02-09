@@ -15,7 +15,7 @@ TARBALL_URL=https://api.anvilworks.org/slugs/$TARBALL
 
 
 # Download and verify the pre-built libs
-mkdir $SODIUM_DIR
+mkdir -p $SODIUM_DIR
 echo -n "-----> Fetching libsodium ($VERSION)... "
 cd $SODIUM_DIR
 curl -O $TARBALL_URL
