@@ -16,7 +16,7 @@ TARBALL_URL=https://api.anvilworks.org/slugs/$TARBALL
 mkdir -p $SODIUM_DIR
 echo -n "-----> Fetching libsodium ($VERSION)... "
 cd $SODIUM_DIR
-curl -O $TARBALL_URL
+test -f $TARBALL || curl -O --silent $TARBALL_URL
 if (sha256sum $TARBALL | grep $HASH &> /dev/null); then
   echo "done"
 else
