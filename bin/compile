@@ -28,6 +28,6 @@ tar xf $TARBALL
 
 # Grab the libs
 echo -n "-----> Installing libsodium ($VERSION)... "
-mkdir -p $BUILD_PATH/lib
+mkdir -p $BUILD_PATH/.heroku/vendor/lib
 cp -rf lib/* $BUILD_PATH/.heroku/vendor/lib
 echo "done"
